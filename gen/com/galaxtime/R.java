@@ -9,7 +9,8 @@ package com.galaxtime;
 
 public final class R {
     public static final class array {
-        public static final int nameView=0x7f090000;
+        public static final int menu_buttos=0x7f080000;
+        public static final int nameView=0x7f080001;
     }
     public static final class attr {
         /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -333,7 +334,7 @@ containing a value of this type.
         public static final int time_configure=0x7f0a0000;
     }
     public static final class string {
-        public static final int age=0x7f070055;
+        public static final int age=0x7f070051;
         public static final int app_name=0x7f070000;
         public static final int app_name_large=0x7f070003;
         public static final int app_name_medium=0x7f070002;
@@ -344,7 +345,7 @@ containing a value of this type.
         public static final int change=0x7f070036;
         public static final int city=0x7f070008;
         public static final int country=0x7f070007;
-        public static final int createWorld=0x7f070040;
+        public static final int createWorld=0x7f070042;
         public static final int dateFifth=0x7f070018;
         public static final int dateFirst=0x7f070014;
         public static final int dateFourth=0x7f070017;
@@ -352,21 +353,20 @@ containing a value of this type.
         public static final int dateThird=0x7f070016;
         public static final int dateView=0x7f070013;
         public static final int date_consists=0x7f070009;
-        public static final int day=0x7f070042;
+        public static final int day=0x7f070044;
         public static final int day_month_year=0x7f07000b;
         public static final int day_year=0x7f07000a;
         public static final int daysInMonth=0x7f07000e;
         public static final int daysInYear=0x7f07000d;
-        public static final int delete=0x7f07003e;
-        public static final int deletedPlanet=0x7f07003f;
+        public static final int delete=0x7f070040;
+        public static final int deletedPlanet=0x7f070041;
         public static final int earthDaysInYear=0x7f07000c;
-        public static final int edit=0x7f07003d;
-        public static final int enterOtherWeather=0x7f070059;
-        public static final int evening=0x7f070044;
+        public static final int edit=0x7f07003f;
+        public static final int enterOtherWeather=0x7f070055;
+        public static final int evening=0x7f070046;
         public static final int farengeit=0x7f070023;
         public static final int happyBirthday=0x7f070039;
         public static final int hoursInDay=0x7f070010;
-        public static final int instruction=0x7f070049;
         public static final int kelvin=0x7f070024;
         public static final int max=0x7f070032;
         public static final int maxAndMinTemperature=0x7f070021;
@@ -377,31 +377,28 @@ containing a value of this type.
         public static final int minus=0x7f070026;
         public static final int minutesInHour=0x7f070011;
         public static final int monthInYear=0x7f07000f;
-        public static final int morning=0x7f070043;
-        public static final int name=0x7f07004b;
-        public static final int nameView=0x7f07004d;
-        public static final int nameViewSummary=0x7f07004f;
-        public static final int night=0x7f070041;
+        public static final int morning=0x7f070045;
+        public static final int name=0x7f070047;
+        public static final int nameView=0x7f070049;
+        public static final int nameViewSummary=0x7f07004b;
+        public static final int night=0x7f070043;
         public static final int not_change=0x7f070037;
         public static final int nowYouHave=0x7f07003a;
-        public static final int ok=0x7f07003c;
         public static final int other=0x7f070030;
-        public static final int otherApps=0x7f070046;
-        public static final int period_pref=0x7f070058;
+        public static final int period_pref=0x7f070054;
         public static final int planet=0x7f070006;
         public static final int plus=0x7f070025;
-        public static final int prefs_age=0x7f070054;
-        public static final int prefs_name=0x7f07004c;
-        public static final int prefs_nameView=0x7f07004e;
-        public static final int prefs_temperature=0x7f070050;
-        public static final int prefs_timeOfDay=0x7f070052;
-        public static final int prefs_weather=0x7f070056;
-        public static final int questions=0x7f070048;
+        public static final int prefs_age=0x7f070050;
+        public static final int prefs_name=0x7f070048;
+        public static final int prefs_nameView=0x7f07004a;
+        public static final int prefs_temperature=0x7f07004c;
+        public static final int prefs_timeOfDay=0x7f07004e;
+        public static final int prefs_weather=0x7f070052;
         public static final int rain=0x7f07002c;
-        public static final int rating=0x7f07004a;
         public static final int secsInMinute=0x7f070012;
-        public static final int settings=0x7f070045;
-        public static final int share=0x7f070047;
+        public static final int share=0x7f07003c;
+        public static final int shareSubject=0x7f07003d;
+        public static final int shareText=0x7f07003e;
         public static final int snow=0x7f07002d;
         public static final int startDay=0x7f07001c;
         public static final int startHour=0x7f07001d;
@@ -410,32 +407,32 @@ containing a value of this type.
         public static final int startTime=0x7f070019;
         public static final int startYear=0x7f07001a;
         public static final int storm=0x7f07002e;
-        public static final int temperature=0x7f070051;
+        public static final int temperature=0x7f07004d;
         public static final int text_email_message=0x7f070035;
         public static final int text_instruction=0x7f070033;
-        public static final int text_send_mail=0x7f070034;
+        public static final int text_mail=0x7f070034;
         public static final int theColdestTime=0x7f070027;
         public static final int theWarmestTime=0x7f070028;
-        public static final int timeOfDay=0x7f070053;
+        public static final int timeOfDay=0x7f07004f;
         public static final int title_activity_time_configure=0x7f070005;
         public static final int volcano=0x7f07002f;
         public static final int weather=0x7f07002b;
-        public static final int weather1=0x7f070057;
+        public static final int weather1=0x7f070053;
         public static final int years=0x7f07003b;
         public static final int yourBirthday=0x7f070029;
     }
     public static final class style {
-        public static final int AppTheme=0x7f080007;
-        public static final int info1TextViewStyle=0x7f080002;
-        public static final int info2TextViewStyle=0x7f080003;
-        public static final int largeWidgetTextStyle=0x7f08000a;
-        public static final int mediumWidgetTextStyle=0x7f080009;
-        public static final int newWorldCheckBoxStyle=0x7f080006;
-        public static final int newWorldEditTextStyle=0x7f080001;
-        public static final int newWorldRadioButtonStyle=0x7f080005;
-        public static final int newWorldSeparator=0x7f080004;
-        public static final int newWorldTextViewStyle=0x7f080000;
-        public static final int smallWidgetTextStyle=0x7f080008;
+        public static final int AppTheme=0x7f090007;
+        public static final int info1TextViewStyle=0x7f090002;
+        public static final int info2TextViewStyle=0x7f090003;
+        public static final int largeWidgetTextStyle=0x7f09000a;
+        public static final int mediumWidgetTextStyle=0x7f090009;
+        public static final int newWorldCheckBoxStyle=0x7f090006;
+        public static final int newWorldEditTextStyle=0x7f090001;
+        public static final int newWorldRadioButtonStyle=0x7f090005;
+        public static final int newWorldSeparator=0x7f090004;
+        public static final int newWorldTextViewStyle=0x7f090000;
+        public static final int smallWidgetTextStyle=0x7f090008;
     }
     public static final class xml {
         public static final int period_prefs=0x7f040000;

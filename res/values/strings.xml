@@ -53,7 +53,7 @@
     <string name="min">min</string>
     <string name="max">max</string>
     <string name="text_instruction">Инструкция</string>
-    <string name="text_send_mail">Sending mail...</string>
+    <string name="text_mail">Sending mail...</string>
     <string name="text_email_message">Mail.</string>
     <string name="change">Изменить</string>
     <string name="not_change">Не изменять</string>
@@ -61,7 +61,19 @@
     <string name="happyBirthday">С днем рождения!</string>
     <string name="nowYouHave">Теперь вам</string>
 	<string name="years">лет</string>
-	<string name="ok">ok</string>
+	
+	<string name="share">Поделиться</string>
+	<string name="shareSubject"></string>
+	<string name="shareText">Узнайте текущее время на Вашей планете с помощью программы GalaXtime.</string>
+	
+	<string-array name="menu_buttos">
+	    <item>Настройки</item>
+	    <item>Другие приложения</item>
+	    <item>Поделиться</item>
+	    <item>Вопросы, предложения</item>
+	    <item>Инструкция</item>
+	    <item>Поставить нам оценку</item>
+    </string-array>
 	
     <string name="edit">Изменить</string>
     <string name="delete">Удалить</string>
@@ -72,13 +84,6 @@
     <string name="day">День</string>
     <string name="morning">Утро</string>
     <string name="evening">Вечер</string>
-    
-    <string name="settings">Настройки</string>
-    <string name="otherApps">Другие приложения</string>
-    <string name="share">Поделиться</string>
-    <string name="questions">Предложения, вопросы</string>
-    <string name="instruction">Инструкция</string>
-    <string name="rating">Поставить нам оценку</string>
     
     <string name="name">Имя</string>
     <string name="prefs_name">name</string>

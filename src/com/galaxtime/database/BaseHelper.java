@@ -31,7 +31,7 @@ public class BaseHelper extends SQLiteOpenHelper implements BaseColumns{
 				+ColumnNames.HOURS_IN_DAY+" FLOAT, "+ColumnNames.MINUTES_IN_HOUR+" FLOAT, "
 				+ColumnNames.SEСS_IN_MINUTE+" FLOAT, "+ColumnNames.MAX_TEMPERATURE+" TEXT, "
 				+ColumnNames.MIN_TEMPERATURE+" TEXT, "+ ColumnNames.COLDEST_TIME+" INTEGER, "
-				+ColumnNames.WARMEST_TIME+" INTEGER, "+ColumnNames.STARTING_YEAR+" INTEGER, "
+				+ColumnNames.WARMEST_TIME+" INTEGER, "+ColumnNames.STARTING_YEAR+" TEXT, "
 				+ColumnNames.STARTING_DAY+" INTEGER, "+ColumnNames.STARTING_HOUR+" INTEGER, "
 				+ColumnNames.STARTING_MINUTE+" INTEGER, "+ColumnNames.BIRTHDAY_DAY+" INTEGER, "
 				+ColumnNames.BIRTHDAY_MONTH+" INTEGER, "+ColumnNames.BIRTHDAY_YEAR+" INTEGER, " 

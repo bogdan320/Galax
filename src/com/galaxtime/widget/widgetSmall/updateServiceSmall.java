@@ -27,8 +27,6 @@ public class updateServiceSmall extends BroadcastReceiver{
 				};
 				thrd.start();
 			}
-			UpdateUtils.updateWidget(context,AppWidgetManager.getInstance(context), 
-				model,UpdateUtils.SMALL);
 			DataUtils.RecalculateTime(context,model,UpdateUtils.SMALL);
 		}
 	}

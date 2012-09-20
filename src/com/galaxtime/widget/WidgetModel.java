@@ -18,12 +18,12 @@ public class WidgetModel extends APrefWidgetModel{
 	private float HoursInDay;
 	private float MinutesInHour;
 	private float SecsInMinute;
-	private int CurrentYear;
+	private long CurrentYear;
 	private int CurrentMonth;
 	private int CurrentDay;
 	private int CurrentHour;
 	private int CurrentMinute;
-	private int StartingYear;
+	private long StartingYear;
 	private int StartingDay;
 	private int StartingHour;
 	private int StartingMinute;
@@ -38,6 +38,7 @@ public class WidgetModel extends APrefWidgetModel{
 	private int birthdayAlarm;
 	private double ageBefore;
 	private String weather;
+	private String currentWeather;
 	private int icon;
 	private long launchingSecond;
 	private String synchronize;
@@ -73,6 +74,7 @@ public class WidgetModel extends APrefWidgetModel{
 	private final String S_BIRTHDAYALARM="birthdayalarm";
 	private final String S_AGEBEFORE="agebefore";
 	private final String S_WEATHER="weather";
+	private final String S_CURRENTWEATHER="currentweather";
 	private final String S_ICON="icon";
 	private final String S_LAUNCHINGSECOND="launchingsecond";
 	private final String S_SYNCHRONIZE="synchronize";
@@ -111,8 +113,11 @@ public class WidgetModel extends APrefWidgetModel{
 	public void setDataView(int dateView){
 		DateView=dateView;
 	}
+	public void setCurrentWeather(String currentWeather){
+		this.currentWeather=currentWeather;
+	}
 	
-	public void setCurrentTime(int year,int month,int day,int hour,int minute){
+	public void setCurrentTime(long year,int month,int day,int hour,int minute){
 		CurrentYear=year;
 		CurrentMonth=month;
 		CurrentDay=day;
@@ -120,7 +125,7 @@ public class WidgetModel extends APrefWidgetModel{
 		CurrentMinute=minute;
 	}
 	
-	public void setStartingTime(int year,int day,int hour,int minute){
+	public void setStartingTime(long year,int day,int hour,int minute){
 		StartingYear=year;
 		StartingDay=day;
 		StartingHour=hour;
@@ -181,7 +186,7 @@ public class WidgetModel extends APrefWidgetModel{
 	public float getSecsInMinute(){
 		return SecsInMinute;
 	}
-	public int getCurrentYear(){
+	public long getCurrentYear(){
 		return CurrentYear;
 	}
 	public int getCurrentMonth() {
@@ -196,7 +201,7 @@ public class WidgetModel extends APrefWidgetModel{
 	public int getCurrentMinute(){
 		return CurrentMinute;
 	}
-	public int getStartingYear() {
+	public long getStartingYear() {
 		return StartingYear;
 	}
 	public int getStartingDay(){
@@ -237,6 +242,9 @@ public class WidgetModel extends APrefWidgetModel{
 	}
 	public String getWeather(){
 		return weather;
+	}
+	public String getCurentWeather(){
+		return currentWeather;
 	}
 	public int getIcon(){
 		return icon;
@@ -295,6 +303,7 @@ public class WidgetModel extends APrefWidgetModel{
 		map.put(S_BIRTHDAYALARM, String.valueOf(birthdayAlarm));
 		map.put(S_AGEBEFORE, String.valueOf(ageBefore));
 		map.put(S_WEATHER, weather);
+		map.put(S_CURRENTWEATHER, currentWeather);
 		map.put(S_ICON, String.valueOf(icon));
 		map.put(S_LAUNCHINGSECOND, String.valueOf(launchingSecond));
 		map.put(S_SYNCHRONIZE, String.valueOf(synchronize));
@@ -314,12 +323,12 @@ public class WidgetModel extends APrefWidgetModel{
 		if(key.equals(getStoredKeyForFieldName(S_HOURS)))HoursInDay=Float.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_MINUTE)))MinutesInHour=Float.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_SECS)))SecsInMinute=Float.valueOf(value);
-		if(key.equals(getStoredKeyForFieldName(S_STARTINGYEAR)))StartingYear=Integer.valueOf(value);
+		if(key.equals(getStoredKeyForFieldName(S_STARTINGYEAR)))StartingYear=Long.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_STARTINGDAY)))StartingDay=Integer.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_STARTINGHOUR)))StartingHour=Integer.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_STARTINGMINUTE)))StartingMinute=Integer.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_DATEVIEW)))DateView=Integer.valueOf(value);
-		if(key.equals(getStoredKeyForFieldName(S_CURRENTYEAR)))CurrentYear=Integer.valueOf(value);
+		if(key.equals(getStoredKeyForFieldName(S_CURRENTYEAR)))CurrentYear=Long.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_CURRENTMONTH)))CurrentMonth=Integer.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_CURRENTDAY)))CurrentDay=Integer.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_CURRENTHOUR)))CurrentHour=Integer.valueOf(value);
@@ -334,6 +343,7 @@ public class WidgetModel extends APrefWidgetModel{
 		if(key.equals(getStoredKeyForFieldName(S_BIRTHDAYALARM)))birthdayAlarm=Integer.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_AGEBEFORE)))ageBefore=Double.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_WEATHER)))weather=value;
+		if(key.equals(getStoredKeyForFieldName(S_CURRENTWEATHER)))currentWeather=value;
 		if(key.equals(getStoredKeyForFieldName(S_ICON)))icon=Integer.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_LAUNCHINGSECOND)))launchingSecond=Long.valueOf(value);
 		if(key.equals(getStoredKeyForFieldName(S_SYNCHRONIZE)))synchronize=value;

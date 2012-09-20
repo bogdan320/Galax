@@ -163,7 +163,7 @@
 				android:id="@+id/info_button_close"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:text="@string/ok" />
+				android:text="@android:string/ok" />
     	</LinearLayout>
     </ScrollView>
 </LinearLayout>

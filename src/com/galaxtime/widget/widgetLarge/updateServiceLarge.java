@@ -1,10 +1,8 @@
 package com.galaxtime.widget.widgetLarge;
 
-import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.galaxtime.widget.DataUtils;
 import com.galaxtime.widget.UpdateUtils;
@@ -26,8 +24,6 @@ public class updateServiceLarge extends BroadcastReceiver{
 				};
 				thrd.start();
 			}
-			UpdateUtils.updateWidget(context,AppWidgetManager.getInstance(context),
-				wm,UpdateUtils.LARGE);
 			DataUtils.RecalculateTime(context,model,UpdateUtils.LARGE);
 			
 		}

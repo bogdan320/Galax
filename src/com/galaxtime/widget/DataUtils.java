@@ -2,13 +2,14 @@ package com.galaxtime.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.Log;
+import android.preference.PreferenceManager;
 
 import com.galaxtime.R;
 import com.galaxtime.database.ColumnNames;
@@ -228,16 +229,17 @@ public class DataUtils {
 		float daysInMonth=model.getDaysInMonth();
 		float monthInYear=model.getMonthInYear();
 		float daysInYear=model.getDaysInYear();
-		int startingYear=model.getStartingYear();
+		long startingYear=model.getStartingYear();
 		int startingDay=model.getStartingDay();
 		int startingHour=model.getStartingHour();
 		int startingMinute=model.getStartingMinute();
 		double minutesLeft=(System.currentTimeMillis()-model.getLaunchingSecond())/(1000*secsInMinute);
 		minutesLeft= (minutesLeft+startingMinute+startingHour*minutesInHour+
-			(startingDay-1)*hoursInDay*minutesInHour+(startingYear-1)*daysInYear*hoursInDay*minutesInHour);
+			startingDay*hoursInDay*minutesInHour);
 		long period=(long)(secsInMinute*333);
-		//if(period<1000){period=period*10;}
-		int year=1,month=1,day=1,hour=1,minute=1;
+		int month=1,day=1,hour=1,minute=1;
+		long year=1;
+		
 		if(monthInYear==-1){
 			year=(int)(minutesLeft/(daysInYear*hoursInDay*minutesInHour));
 			day=(int)((minutesLeft/(minutesInHour*hoursInDay))-(year*daysInYear));
@@ -245,8 +247,6 @@ public class DataUtils {
 				(day*hoursInDay));
 			minute=(int)(minutesLeft-(minutesInHour*year*daysInYear*hoursInDay)-
 				(minutesInHour*day*hoursInDay)-(minutesInHour*hour));
-			year=year+1;
-			day=day+1;
 		}else{
 			year=(int)(minutesLeft/(minutesInHour*hoursInDay*daysInYear));
 			month=(int)((minutesLeft/(minutesInHour*hoursInDay*daysInMonth))-
@@ -258,10 +258,18 @@ public class DataUtils {
 			minute=(int)(minutesLeft-(minutesInHour*year*daysInYear*hoursInDay)-
 				(month*daysInMonth*hoursInDay*minutesInHour)-(minutesInHour*day*hoursInDay)-
 				(minutesInHour*hour));
-			year=year+1;
-			day=day+1;
 			month=month+1;
 		}
+		year=year+startingYear;
+		SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(context);
+		if(model.getCurrentMinute()<minute){
+			String currentWeather="";
+			if(prefs.getBoolean(context.getString(R.string.prefs_weather), true)){
+				currentWeather=getWeather(model.getWeather());
+			}
+			model.setCurrentWeather(currentWeather);
+		}
+		
 		model.setCurrentTime(year, month, day, hour, minute);
 		model.SavePreferences(context);
 		UpdateUtils.startAlarmManager(context, model.getId(),period, size);
@@ -271,7 +279,7 @@ public class DataUtils {
 	/**
 	 * Transform current data to string according to dateView rule.
 	 */
-	public static String getDate(int dateView,int currentYear, int currentMonth,int currentDay) {
+	public static String getDate(int dateView,long currentYear, int currentMonth,int currentDay) {
 		String date;
 		switch(dateView){
 			case R.id.new_RadioBut_DDxYY:
@@ -349,7 +357,7 @@ public class DataUtils {
 		if(monthOfBirthday>=9){x=x+1;}
 		if((monthOfBirthday==10)||(monthOfBirthday==12)){x=x-1;}
 		int day=dayOfBirthday+(monthOfBirthday-1)*30+x;
-		float secondsOfBirthday=currentSeconds(yearOfBirthday,day,0,0);
+		float secondsOfBirthday=currentSeconds(yearOfBirthday,day-1,0,0);
 		double age;
 		if(monthInYear==-1){
 			age=(double)(secondsOfBirthday/(daysInYear*hoursInDay*minutesInHour*secsInMinute));

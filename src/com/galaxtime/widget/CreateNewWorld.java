@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -57,7 +56,8 @@ public class CreateNewWorld extends Activity implements DialogInterface.OnClickL
 	ProgressDialog progrDial;
 
 	private TableRadioButtonGroup iconGroup;
-	
+
+	private static final int MAX_VALUE=999999999;
 	@Override
 	public void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
@@ -411,24 +411,44 @@ public class CreateNewWorld extends Activity implements DialogInterface.OnClickL
 					weather7.getText()+"/"+weather8.getText()+"/"+weather9.getText()+"/";
 				try{
 					
-					if((withMonth)&&(Float.valueOf(monthInYear)<1)){
+					if((withMonth)&&((Float.valueOf(monthInYear)<1))){
 						Toast.makeText(context, "Количество месяцев в году вашей планеты должно быть больше 1", Toast.LENGTH_SHORT).show();
+						return;
+					}
+					if((withMonth)&&((Float.valueOf(monthInYear))>MAX_VALUE)){
+						Toast.makeText(context, "Вы ввели слушком большое количество месяцев в году", Toast.LENGTH_SHORT).show();
 						return;
 					}
 					if((withMonth)&&(Float.valueOf(daysInMonth)<1)){
 						Toast.makeText(context, "Количество суток в месяце вашей планеты должно быть больше 1", Toast.LENGTH_SHORT).show();
 						return;
 					}
+					if((withMonth)&&((Float.valueOf(daysInMonth))>MAX_VALUE)){
+						Toast.makeText(context, "Вы ввели слушком большое количество дней в месяце", Toast.LENGTH_SHORT).show();
+						return;
+					}
 					if(Float.valueOf(daysInYear)<1){
 						Toast.makeText(context, "Количество суток в году вашей планеты должно быть больше 1", Toast.LENGTH_SHORT).show();
+						return;
+					}
+					if(Float.valueOf(daysInYear)>MAX_VALUE){
+						Toast.makeText(context, "Вы ввели слушком большое количество дней в году", Toast.LENGTH_SHORT).show();
 						return;
 					}
 					if(Float.valueOf(hoursInDay)<1){
 						Toast.makeText(context, "Количество часов в сутках вашей планеты должно быть больше 1", Toast.LENGTH_SHORT).show();
 						return;
 					}
+					if(Float.valueOf(hoursInDay)>MAX_VALUE){
+						Toast.makeText(context, "Вы ввели слушком большое количество часов в сутках", Toast.LENGTH_SHORT).show();
+						return;
+					}
 					if(Float.valueOf(minutesInHour)<1){
 						Toast.makeText(context, "Количество минут в часе вашей планеты должно быть больше 1", Toast.LENGTH_SHORT).show();
+						return;
+					}
+					if(Float.valueOf(minutesInHour)>MAX_VALUE){
+						Toast.makeText(context, "Вы ввели слушком большое количество минут в часе", Toast.LENGTH_SHORT).show();
 						return;
 					}
 					if(Float.valueOf(secsInMinute)<1){
@@ -450,7 +470,6 @@ public class CreateNewWorld extends Activity implements DialogInterface.OnClickL
 						Toast.makeText(context, "Введите количество месяцев в году.", Toast.LENGTH_SHORT).show();
 						return;
 					}
-					Log.v("mes", "1x");
 					
 					if(hoursInDay.equals("")){
 						Toast.makeText(context, "Введите количество часов в дне.", Toast.LENGTH_SHORT).show();
@@ -461,7 +480,7 @@ public class CreateNewWorld extends Activity implements DialogInterface.OnClickL
 						Toast.makeText(context, "Введите количество минут в часе.", Toast.LENGTH_SHORT).show();
 						return;
 					}
-					if((!startingDay.equals(""))&&(Integer.valueOf(startingDay)>Float.valueOf(daysInYear))){
+					if((!startingDay.equals(""))&&(Float.valueOf(startingDay)>Float.valueOf(daysInYear))){
 						Toast.makeText(context, "Начальный день должен быть меньше," +
 							" чем количество дней в году.", Toast.LENGTH_SHORT).show();
 						return;
@@ -471,18 +490,23 @@ public class CreateNewWorld extends Activity implements DialogInterface.OnClickL
 							"минимум 1.", Toast.LENGTH_SHORT).show();
 						return;
 					}
-					if((!startingYear.equals(""))&&(Integer.valueOf(startingYear)==0)){
+
+					if((!startingYear.equals(""))&&(Long.valueOf(startingYear)>MAX_VALUE)){
+						Toast.makeText(context, "Начальный год слишком большой.", Toast.LENGTH_SHORT).show();
+						return;
+					}
+					if((!startingYear.equals(""))&&(Long.valueOf(startingYear)==0)){
 						Toast.makeText(context, "Начальный год должен быть как " +
 							"минимум 1.", Toast.LENGTH_SHORT).show();
 						return;
 					}
-					if((!startingHour.equals(""))&&(Integer.valueOf(startingHour)>Float.valueOf(hoursInDay))){
+					
+					if((!startingHour.equals(""))&&(Long.valueOf(startingHour)>Float.valueOf(hoursInDay))){
 						Toast.makeText(context, "Начальный час должен быть меньше," +
 							" чем количество часов в сутках.", Toast.LENGTH_SHORT).show();
 						return;
 					}
-					Log.v("mes", "2x");
-					if((!startingMinute.equals(""))&&(Integer.valueOf(startingDay)>Float.valueOf(daysInYear))){
+					if((!startingMinute.equals(""))&&(Long.valueOf(startingDay)>Float.valueOf(daysInYear))){
 						Toast.makeText(context, "Начальная минута должна быть меньше," +
 							" чем количество минут в часе.", Toast.LENGTH_SHORT).show();
 						return;
@@ -506,7 +530,6 @@ public class CreateNewWorld extends Activity implements DialogInterface.OnClickL
 							maxTemp="-1K";minTemp="-1K";
 						}
 					}else{
-						Log.v("mes", "3x");
 						if(coldestTime.equals("")){
 							coldestTime=((int)(Float.valueOf(hoursInDay)/6))+"";
 						}
@@ -521,7 +544,6 @@ public class CreateNewWorld extends Activity implements DialogInterface.OnClickL
 								((RadioButton)findViewById(R.id.new_RadioBut_maxPlus)).setChecked(true);
 							}
 						}
-						Log.v("mes", "4x");
 						if((!maxTemp.equals(""))&(minTemp.equals(""))){
 							minTemp=maxTemp;
 							if(((RadioButton)findViewById(R.id.new_RadioBut_maxMinus)).isChecked()){
@@ -559,7 +581,6 @@ public class CreateNewWorld extends Activity implements DialogInterface.OnClickL
 							Toast.makeText(context, "Некорректные температурные данные", Toast.LENGTH_SHORT).show();
 							return;
 						}
-						Log.v("mes", "5x");
 					}
 				}catch(NumberFormatException e){
 					Toast.makeText(context, "Неверные данные", Toast.LENGTH_SHORT).show();
@@ -651,7 +672,6 @@ public class CreateNewWorld extends Activity implements DialogInterface.OnClickL
 
 	private void noMonth(){
 		monthInYear.setEnabled(false);
-		//monthInYear.setFocusable(false);
 		monthInYear.setFocusableInTouchMode(false);
 		DDxYY.setEnabled(true);
 		DD_YY.setEnabled(true);
@@ -669,7 +689,6 @@ public class CreateNewWorld extends Activity implements DialogInterface.OnClickL
 	
 	private void withMonth(){
 		monthInYear.setFocusableInTouchMode(true);
-		//monthInYear.setFocusable(true);
 		monthInYear.setEnabled(true);
 		DDxYY.setEnabled(false);
 		DD_YY.setEnabled(false);

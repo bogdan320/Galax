@@ -1,6 +1,5 @@
 package com.galaxtime.widget;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -32,7 +31,7 @@ import com.galaxtime.widget.widgetMedium.updateServiceMedium;
 import com.galaxtime.widget.widgetSmall.WidgetProviderSmall;
 import com.galaxtime.widget.widgetSmall.updateServiceSmall;
 
-public class UpdateUtils extends Activity{
+public class UpdateUtils{
 	private final static int SETTINGS=1;
 	private final static int OTHER_APPLICATIONS=2;
 	private final static int SHARE=3;
@@ -46,12 +45,13 @@ public class UpdateUtils extends Activity{
 	public static final int LARGE=3;
 
 	public static void CreateMenu(Context context,Menu menu) {
-		menu.add(0, SETTINGS, 0,context.getResources().getString(R.string.settings));
-		menu.add(0, OTHER_APPLICATIONS, 0,context.getResources().getString(R.string.otherApps));
-		menu.add(0, SHARE, 0,context.getResources().getString(R.string.share));
-		menu.add(0, QUESTIONS, 0,context.getResources().getString(R.string.questions));
-		menu.add(0, INSTRUCTION, 0,context.getResources().getString(R.string.instruction));
-		menu.add(0, RATING, 0,context.getResources().getString(R.string.rating));
+		String appMenu[] = context.getResources().getStringArray(R.array.menu_buttos);
+		menu.add(0, SETTINGS,SETTINGS,appMenu[0]).setIcon(android.R.drawable.ic_menu_preferences);
+		menu.add(0, OTHER_APPLICATIONS, OTHER_APPLICATIONS,appMenu[1]).setIcon(android.R.drawable.ic_menu_search);
+		menu.add(0, SHARE, SHARE,appMenu[2]).setIcon(android.R.drawable.ic_menu_share);
+		menu.add(0, QUESTIONS, QUESTIONS,appMenu[3]).setIcon(android.R.drawable.ic_menu_send);
+		menu.add(0, INSTRUCTION, INSTRUCTION,appMenu[4]).setIcon(android.R.drawable.ic_menu_info_details);
+		menu.add(0, RATING, RATING,appMenu[5]).setIcon(android.R.drawable.star_big_off);
 	}
 	public static void SelectMenu(Context context, MenuItem item) {
 		switch(item.getItemId()){
@@ -75,7 +75,7 @@ public class UpdateUtils extends Activity{
 				context.startActivity(instruction);
 				break;
 			case SHARE:
-				//share(getString(R.string.shareSubject), getString(R.string.shareText));
+				share(context,context.getString(R.string.shareSubject), context.getString(R.string.shareText));
 				break;
 			case RATING:
 				/*try {
@@ -99,17 +99,17 @@ public class UpdateUtils extends Activity{
 					context.getString(R.string.text_email_message));
 				emailIntent.setType("text/plain");
 				context.startActivity(Intent.createChooser(emailIntent,
-					context.getString(R.string.text_send_mail)));
+					context.getString(R.string.text_mail)));
 			break;
 		}
 	}
-	public void share(String subject, String text) {
+	public static void share(Context context,String subject, String text) {
 
 		final Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
 		intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 		intent.putExtra(Intent.EXTRA_TEXT, text);
-		startActivity(Intent.createChooser(intent, getString(R.string.share)));
+		context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)));
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class UpdateUtils extends Activity{
 	public static void updateWidgetLocal(Context context,Cursor cur,int mAppWidgetId,int size) {
 		alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 		cur.moveToFirst();
-		int StartingYear=cur.getInt(cur.getColumnIndex(ColumnNames.STARTING_YEAR));
+		long StartingYear=cur.getLong(cur.getColumnIndex(ColumnNames.STARTING_YEAR));
 		int StartingMonth=-1;
 			int monthInYear=cur.getInt(cur.getColumnIndex(ColumnNames.MONTH_IN_YEAR));
 			if(monthInYear!=-1){
@@ -134,10 +134,7 @@ public class UpdateUtils extends Activity{
 		m.setLaunchingSecond(System.currentTimeMillis());
 		
 		SetWidgetData(context,m,cur);
-		//age1=DataUtils.getAge(m);
 		DataUtils.RecalculateTime(context, m, size);
-		//updateWidget(context,AppWidgetManager.getInstance(context),m,size);
-		//UpdateUtils.startAlarmManager(context, m.getId(),(long)(m.getSecsInMinute()*1000), size);
 	}
 
 	private static void SetWidgetData(Context context,WidgetModel m,Cursor cur) {
@@ -163,7 +160,7 @@ public class UpdateUtils extends Activity{
 		int birthdayAlarm=cur.getInt(cur.getColumnIndex(ColumnNames.BIRTHDAY_ALARM));
 		String weather=cur.getString(cur.getColumnIndex(ColumnNames.WEATHER));
 		int iconButtonId=cur.getInt(cur.getColumnIndex(ColumnNames.ICON));
-		int StartingYear=cur.getInt(cur.getColumnIndex(ColumnNames.STARTING_YEAR));
+		long StartingYear=cur.getLong(cur.getColumnIndex(ColumnNames.STARTING_YEAR));
 		int StartingDay=cur.getInt(cur.getColumnIndex(ColumnNames.STARTING_DAY));
 		int StartingHour=cur.getInt(cur.getColumnIndex(ColumnNames.STARTING_HOUR));
 		int StartingMinute=cur.getInt(cur.getColumnIndex(ColumnNames.STARTING_MINUTE));
@@ -214,7 +211,8 @@ public class UpdateUtils extends Activity{
 		}
 		
 		if((m.getBirthdayAlarm()==1)&(((int)Math.floor(age1))<((int)Math.floor(age2)))){
-			NotificationManager notificationMgr=(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
+			NotificationManager notificationMgr=(NotificationManager)context.getSystemService(
+				Context.NOTIFICATION_SERVICE);
 			Notification notification=new Notification(R.drawable.icon, 
 				context.getResources().getString(R.string.birthdayNotification)+" "+m.getPlanet(), 
 				System.currentTimeMillis());
@@ -228,10 +226,7 @@ public class UpdateUtils extends Activity{
 				context.getResources().getString(R.string.years),pendingIntent);
 			notificationMgr.notify(4, notification);
 		}
-		String currentWeather="";
-		if(prefs.getBoolean(context.getString(R.string.prefs_weather), true)){
-			currentWeather=DataUtils.getWeather(m.getWeather());
-		}
+		
 		String timeOfDay="";
 		if(prefs.getBoolean(context.getString(R.string.prefs_timeOfDay), true)){
 			timeOfDay=context.getResources().getString(
@@ -250,7 +245,7 @@ public class UpdateUtils extends Activity{
 				viewsSmall.setImageViewBitmap(R.id.widget_small_time,DataUtils.TimeBitmap(context,time,SMALL));
 				viewsSmall.setTextViewText(R.id.widget_small_planetName,name);
 				viewsSmall.setImageViewResource(R.id.widget_small_image,DataUtils.getIconId(m.getIcon()));
-				viewsSmall.setTextViewText(R.id.widget_small_weather, currentWeather);
+				viewsSmall.setTextViewText(R.id.widget_small_weather, m.getCurentWeather());
 				
 				viewsMedium=new RemoteViews(context.getPackageName(), R.layout.widget_configure_medium);
 				viewsMedium.setTextViewText(R.id.widget_medium_date,date);
@@ -260,7 +255,7 @@ public class UpdateUtils extends Activity{
 				viewsMedium.setImageViewBitmap(R.id.widget_medium_time,DataUtils.TimeBitmap(context,time,MEDIUM));
 				viewsMedium.setTextViewText(R.id.widget_medium_planetName,name);
 				viewsMedium.setImageViewResource(R.id.widget_medium_image,DataUtils.getIconId(m.getIcon()));
-				viewsMedium.setTextViewText(R.id.widget_medium_weather, currentWeather);
+				viewsMedium.setTextViewText(R.id.widget_medium_weather, m.getCurentWeather());
 				
 				viewsLarge=new RemoteViews(context.getPackageName(), R.layout.widget_configure_large);
 				viewsLarge.setImageViewBitmap(R.id.widget_large_date,dateBitmap(context,date));
@@ -270,7 +265,7 @@ public class UpdateUtils extends Activity{
 				viewsLarge.setImageViewBitmap(R.id.widget_large_time,DataUtils.TimeBitmap(context,time,LARGE));
 				viewsLarge.setTextViewText(R.id.widget_large_planetName,name);
 				viewsLarge.setImageViewResource(R.id.widget_large_image,DataUtils.getIconId(m.getIcon()));
-				viewsLarge.setTextViewText(R.id.widget_large_weather, currentWeather);
+				viewsLarge.setTextViewText(R.id.widget_large_weather, m.getCurentWeather());
 				
 			switch(size){
 				case SMALL:	
@@ -498,7 +493,6 @@ public class UpdateUtils extends Activity{
 		}	
 		if(primaryId!=-1){
 			CopyExistModel(context,mAppWidgetId,primaryModel,cur,size);
-			DataUtils.RecalculateTime(context, primaryModel, size);
 			return true;
 		}
 		return false;
@@ -522,9 +516,8 @@ public class UpdateUtils extends Activity{
 		m.setWeather(model.getWeather());
 		m.setIcon(model.getIcon());
 		m.SavePreferences(context);
-		if(model.getSynchronize().contains(m.iid+"")){
-			Log.v("mes", "no");
-		}else{
+		UpdateUtils.updateWidget(context, AppWidgetManager.getInstance(context), m, size);
+		if(!model.getSynchronize().contains(m.iid+"")){
 			switch(size){
 				case SMALL:
 					model.addToSynchronize(m.getId()+"s");
@@ -547,38 +540,34 @@ public class UpdateUtils extends Activity{
 				curString=curString+sync.charAt(i);
 			}else{
 				int id=Integer.valueOf(curString.substring(0,curString.length()-1));
-				String sizeStr=curString.substring(curString.length()-1);
 				curString="";
-				
-				int size=1;
-				if(sizeStr.equals("s")){size=SMALL;}
-				if(sizeStr.equals("m")){size=MEDIUM;}
-				if(sizeStr.equals("l")){size=LARGE;}
+
 				WidgetModel m=WidgetModel.retrieveModel(context, id);
 				if(m==null){
 					String newSynchro=sync.substring(0,i-(id+"/").length())+sync.substring(i+1);
 					model.setSynchronize(newSynchro);
 					model.SavePreferences(context);
-					Log.v("mes", sync+" "+newSynchro);
 					continue;
 				}
-					m.setTimeParams(model.getDaysInYear(),model.getMonthInYear(),model.getDaysInMonth(),
-						model.getHoursInDay(),model.getMinutesInHour(),model.getSecsInMinute());
-					m.setTemperaturesParams(model.getMaxTemperature(), model.getMinTemperature(), 
-						model.getColdestTime(), model.getWarmestTime());
-					m.setLaunchingSecond(model.getLaunchingSecond());
-					m.setPlanetName(model.getPlanet(), model.getCountry(), model.getCity());
-					m.setDataView(model.getDateView());
-					m.setCurrentTime(model.getCurrentYear(), model.getCurrentMonth(), model.getCurrentDay(), 
-						model.getCurrentHour(), model.getCurrentMinute());
-					m.setStartingTime(model.getStartingYear(), model.getStartingDay(), model.getStartingHour(), 
-						model.getStartingMinute());
-					m.setBirthday(model.getYearOfBirthday(), model.getMonthOfBirthday(),
-						model.getDayOfBirthday(),model.getBirthdayAlarm());
-					m.setAgeBefore(model.getAgeBefore());
-					m.setWeather(model.getWeather());
-					m.setIcon(model.getIcon());
-					m.SavePreferences(context);
+				
+				m.setTimeParams(model.getDaysInYear(),model.getMonthInYear(),model.getDaysInMonth(),
+					model.getHoursInDay(),model.getMinutesInHour(),model.getSecsInMinute());
+				m.setTemperaturesParams(model.getMaxTemperature(), model.getMinTemperature(), 
+					model.getColdestTime(), model.getWarmestTime());
+				m.setLaunchingSecond(model.getLaunchingSecond());
+				m.setPlanetName(model.getPlanet(), model.getCountry(), model.getCity());
+				m.setDataView(model.getDateView());
+				m.setCurrentTime(model.getCurrentYear(), model.getCurrentMonth(), model.getCurrentDay(), 
+					model.getCurrentHour(), model.getCurrentMinute());
+				m.setStartingTime(model.getStartingYear(), model.getStartingDay(), model.getStartingHour(), 
+					model.getStartingMinute());
+				m.setBirthday(model.getYearOfBirthday(), model.getMonthOfBirthday(),
+					model.getDayOfBirthday(),model.getBirthdayAlarm());
+				m.setAgeBefore(model.getAgeBefore());
+				m.setWeather(model.getWeather());
+				m.setIcon(model.getIcon());
+				m.setCurrentWeather(model.getCurentWeather());
+				m.SavePreferences(context);
 			}
 		}
 	}
